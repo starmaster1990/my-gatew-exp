@@ -1,0 +1,23 @@
+http:
+  host: ${HOST}
+  port: ${PORT}
+apiEndpoints:
+  lumen:
+    host: ${HOST}
+    paths: ['/api/lumen/*']
+serviceEndpoints:
+  servicelumen:
+    url: ${API_LUMEN}
+policies:
+  # - key-auth
+  - proxy
+pipelines:
+  lumen:
+    apiEndpoints:
+      - lumen
+    policies:
+      # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: servicelumen 
+              changeOrigin: true
